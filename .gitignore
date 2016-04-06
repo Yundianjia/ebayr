@@ -17,3 +17,19 @@ test/version_tmp
 tmp
 .ebayr.conf
 *.sw?
+
+# Ignore IDE
+.idea
+
+*.swo
+*.swp
+
+**/*.swo
+**/*.swp
+
+*.gem
+
+# 忽略 rvm gemset 的文件
+.ruby-gemset
+.ruby-version
+

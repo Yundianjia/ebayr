@@ -132,7 +132,6 @@ module Ebayr
     Request.new(command, arguments).send
   end
 
-
   def self.included(mod)
     mod.extend(self)
   end
