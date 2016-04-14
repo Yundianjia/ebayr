@@ -19,7 +19,7 @@ module Ebayr #:nodoc:
       # Remaining options are converted and used as input to the call
       @input = options.delete(:input) || options
     end
-    
+
     def input_xml
       self.class.xml(@input)
     end
@@ -37,9 +37,9 @@ module Ebayr #:nodoc:
           'X-EBAY-API-APP-NAME' => app_id.to_s,
           'X-EBAY-API-CERT-NAME' => cert_id.to_s,
           'X-EBAY-API-CALL-NAME' => @command.to_s,
+          'X-EBAY-API-SITEID' => @site_id.to_s,
           'Content-Type' => 'text/xml'
       }
-
     end
 
     # Gets the body of this request (which is XML)
@@ -48,7 +48,7 @@ module Ebayr #:nodoc:
         <?xml version="1.0" encoding="utf-8"?>
         <#{@command}Request xmlns="urn:ebay:apis:eBLBaseComponents">
           #{requester_credentials_xml}
-          #{input_xml}
+      #{input_xml}
         </#{@command}Request>
       XML
     end
@@ -91,7 +91,7 @@ module Ebayr #:nodoc:
         puts "Response: #{response}"
       end
 
-      @response = Response.new(self, response)
+      @response = ::Hashie::Mash.new Response.new(self, response)
     end
 
     def to_s
@@ -106,9 +106,12 @@ module Ebayr #:nodoc:
     def self.xml(*args)
       args.map do |structure|
         case structure
-          when Hash then structure.map { |k, v| "<#{k.to_s}>#{xml(v)}</#{k.to_s}>" }.join
-          when Array then structure.map { |v| xml(v) }.join
-          else self.serialize_input(structure).to_s
+          when Hash then
+            structure.map { |k, v| "<#{k.to_s}>#{xml(v)}</#{k.to_s}>" }.join
+          when Array then
+            structure.map { |v| xml(v) }.join
+          else
+            self.serialize_input(structure).to_s
         end
       end.join
     end
@@ -116,9 +119,11 @@ module Ebayr #:nodoc:
     # Prepares an argument for input to an eBay Trading API XML call.
     # * Times are converted to ISO 8601 format
     def self.serialize_input(input)
-       case input
-         when Time then input.to_time.utc.iso8601
-         else input
+      case input
+        when Time then
+          input.to_time.utc.iso8601
+        else
+          input
       end
     end
 

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'logger'
+require 'hashie'
 require 'net/https'
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/hash/conversions'

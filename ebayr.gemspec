@@ -21,6 +21,8 @@ command-line client which aids integration into other projects.
   gem.require_paths = ["lib", "bin"]
   gem.version       = "0.0.10"
 
+  gem.add_dependency 'hashie'
+
   if RUBY_VERSION < "1.9"
     gem.add_dependency 'nokogiri', '~> 1.5.0'
     gem.add_dependency 'i18n', '~> 0.6.11'
