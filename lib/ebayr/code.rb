@@ -57,7 +57,7 @@ module Ebayr #:nodoc:
     code_types = %w(AdditionalCompatibilityEnabled AdFormatEnabled BestOfferAutoAcceptEnabled BestOfferAutoDeclineEnabled BestOfferCounterEnabled BestOfferEnabled BrandMPNIdentifierEnabled BuyerGuaranteeEnabled ClassifiedAdAutoAcceptEnabled ClassifiedAdAutoDeclineEnabled ClassifiedAdBestOfferEnabled ClassifiedAdCompanyNameEnabled ClassifiedAdContactByAddressEnabled ClassifiedAdContactByEmailEnabled ClassifiedAdContactByPhoneEnabled ClassifiedAdCounterOfferEnabled ClassifiedAdPaymentMethodEnabled ClassifiedAdShippingMethodEnabled CompatibilityEnabled CompatibleVehicleType ConditionEnabled ConditionValues CrossBorderTradeEnabled CustomCode DigitalGoodDeliveryEnabled EANEnabled eBayMotorsProAdFormatEnabled eBayMotorsProAutoAcceptEnabled eBayMotorsProAutoDeclineEnabled eBayMotorsProBestOfferEnabled eBayMotorsProCompanyNameEnabled eBayMotorsProContactByAddressEnabled eBayMotorsProContactByEmailEnabled eBayMotorsProContactByPhoneEnabled eBayMotorsProCounterOfferEnabled eBayMotorsProPaymentMethodCheckOutEnabled eBayMotorsProSellerContactDetailsEnabled eBayMotorsProShippingMethodEnabled FreeGalleryPlusEnabled FreePicturePackEnabled GalleryFeaturedDurations GlobalShippingEnabled Group1MaxFlatShippingCost Group2MaxFlatShippingCost Group3MaxFlatShippingCost HandlingTimeEnabled HomePageFeaturedEnabled INEscrowWorkflowTimeline IntangibleEnabled ISBNEnabled ItemSpecificsEnabled ListingDurations LocalListingDistances LocalMarketAdFormatEnabled LocalMarketAutoAcceptEnabled LocalMarketAutoDeclineEnabled LocalMarketBestOfferEnabled LocalMarketCompanyNameEnabled LocalMarketContactByAddressEnabled LocalMarketContactByEmailEnabled LocalMarketContactByPhoneEnabled LocalMarketCounterOfferEnabled LocalMarketNonSubscription LocalMarketPaymentMethodCheckOutEnabled LocalMarketPremiumSubscription LocalMarketRegularSubscription LocalMarketSellerContactDetailsEnabled LocalMarketShippingMethodEnabled LocalMarketSpecialitySubscription MaxCompatibleApplications MaxFlatShippingCost MaxFlatShippingCostCBTExempt MaxGranularFitmentCount MinCompatibleApplications MinimumReservePrice NonSubscription PaisaPayFullEscrowEnabled PaymentMethods PaymentProfileCategoryGroup PayPalBuyerProtectionEnabled PayPalRequired PickupDropOffEnabled PremiumSubscription ProductCreationEnabled ProPack ProPackPlus RegularSubscription ReturnPolicyEnabled ReturnPolicyProfileCategoryGroup RevisePriceAllowed ReviseQuantityAllowed SafePaymentRequired SellerContactDetailsEnabled ShippingProfileCategoryGroup ShippingTermsRequired SkypeMeNonTransactionalEnabled SkypeMeTransactionalEnabled SpecialitySubscription StoreOwnerExtendedListingDurations StoreOwnerExtendedListingDurationsEnabled UPCEnabled UserConsentRequired ValueCategory ValuePack VariationsEnabled)
 
     code_types.each do |item|
-      self.const_set item, item
+      self.const_set item.sub(/^eBay/, 'Ebay'), item
     end
   end
 
@@ -75,6 +75,31 @@ module Ebayr #:nodoc:
   module WarningLevelCodeType
     High = 'High'
     Low = 'Low'
+  end
+
+  # http://developer.ebay.com/DevZone/guides/ebayfeatures/Development/Desc-ItemCondition.html
+  module ConditionIDCodeType
+    NEW =  1000
+
+    NEW_OTHER = 1500
+
+    NEW_WITH_DEFECTS = 1750
+
+    MANUFACTURER_REFURBISHED = 2000
+
+    SELLER_REFURBISHED = 2500
+
+    LIKE_NEW = 2750
+
+    USED = 3000
+
+    VERY_GOOD = 4000
+
+    GOOD = 5000
+
+    ACCEPTABLE = 6000
+
+    PART_DAMAGE = 7000
   end
 
 end
