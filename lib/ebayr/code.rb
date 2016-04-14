@@ -41,7 +41,7 @@ module Ebayr #:nodoc:
       item = "Days_#{item}"
       self.const_set item, item
     end
-    GTC = 'GTC'
+    GTC = 'GTC' # Good Til Cancel
   end
 
   module CountryCodeType

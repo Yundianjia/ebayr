@@ -32,14 +32,14 @@ module Ebayr #:nodoc:
     # Gets the headers that will be sent with this request.
     def headers
       {
-        'X-EBAY-API-COMPATIBILITY-LEVEL' => @compatability_level.to_s,
-        'X-EBAY-API-DEV-NAME' => dev_id.to_s,
-        'X-EBAY-API-APP-NAME' => app_id.to_s,
-        'X-EBAY-API-CERT-NAME' => cert_id.to_s,
-        'X-EBAY-API-CALL-NAME' => @command.to_s,
-        'X-EBAY-API-SITEID' => @site_id.to_s,
-        'Content-Type' => 'text/xml'
+          'X-EBAY-API-COMPATIBILITY-LEVEL' => @compatability_level.to_s,
+          'X-EBAY-API-DEV-NAME' => dev_id.to_s,
+          'X-EBAY-API-APP-NAME' => app_id.to_s,
+          'X-EBAY-API-CERT-NAME' => cert_id.to_s,
+          'X-EBAY-API-CALL-NAME' => @command.to_s,
+          'Content-Type' => 'text/xml'
       }
+
     end
 
     # Gets the body of this request (which is XML)
@@ -70,8 +70,12 @@ module Ebayr #:nodoc:
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.read_timeout = @http_timeout
 
+      puts "Request URL: #{@uri.to_s}"
+
       # Output request XML if debug flag is set
-      puts body if debug == true
+      if debug == true
+        puts "Request body: #{body}"
+      end
 
       if @uri.port == 443
         http.use_ssl = true
@@ -82,6 +86,10 @@ module Ebayr #:nodoc:
       post.body = body
 
       response = http.start { |http| http.request(post) }
+
+      if debug == true
+        puts "Response: #{response}"
+      end
 
       @response = Response.new(self, response)
     end
