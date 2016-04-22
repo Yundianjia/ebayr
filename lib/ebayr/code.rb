@@ -102,4 +102,12 @@ module Ebayr #:nodoc:
     PART_DAMAGE = 7000
   end
 
+  # http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/SelectionModeCodeType.html
+  module SelectionModeCodeType
+    code_types = %w(Automatic CustomCode FreeText Manual Prefilled SelectionOnly)
+
+    code_types.each do |item|
+      self.const_set item, item
+    end
+  end
 end
