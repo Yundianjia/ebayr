@@ -2,16 +2,22 @@
 module Ebayr
   class File < Request
 
+    def initialize(command, options = {})
+
+      super
+    end
+
     def self.uri
       URI::parse "https://storage#{sandbox ? '.sandbox' : ''}.ebay.com/FileTransferService"
     end
 
     def self.download(options = {})
-      options.merge!({
-                         taskReferenceId: '5783644587',
-                         fileReferenceId: '5869435317'
-                     })
-      self.new(:downloadFile, input: options, uri: uri).send
+      params = {}.merge!({
+                             fileReferenceId: options[:file_reference_id],
+                             taskReferenceId: options[:task_reference_id]
+                         })
+
+      self.new(:downloadFile, input: params, uri: uri).send
     end
 
     def self.upload(options = {})
@@ -29,9 +35,13 @@ module Ebayr
 
     def headers
       {
-          'X-EBAY-SOA-MESSAGE-PROTOCOL' => 'SOAP12',
+          # 'X-EBAY-SOA-MESSAGE-PROTOCOL' => 'SOAP12',
           'X-EBAY-SOA-OPERATION-NAME' => @command.to_s,
-          'X-EBAY-SOA-SECURITY-TOKEN' =>  self.auth_token,
+          'X-EBAY-SOA-SECURITY-TOKEN' => self.auth_token,
+          'X-EBAY-SOA-REQUEST-DATA-FORMAT' => 'XML',
+          'X-EBAY-SOA-RESPONSE-DATA-FORMAT' => 'XML',
+          'X-EBAY-SOA-SERVICE-VERSION' => '1.0.0',
+          'X-EBAY-SOA-SERVICE-NAME' => 'FileTransferService',
           'Content-Type' => 'text/xml'
       }
     end

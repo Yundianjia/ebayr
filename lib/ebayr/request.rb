@@ -74,6 +74,7 @@ module Ebayr #:nodoc:
 
       # Output request XML if debug flag is set
       if debug == true
+        puts "Request headers: #{headers}"
         puts "Request body: #{body}"
       end
 
@@ -91,7 +92,12 @@ module Ebayr #:nodoc:
         puts "Response: #{response}"
       end
 
-      @response = ::Hashie::Mash.new Response.new(self, response)
+      if response.is_a? Net::HTTPInternalServerError
+        puts "#{response.class.to_s}: #{response.message}"
+        return Hashie::Mash.new({})
+      end
+
+      @response = Hashie::Mash.new(Response.new(self, response))
     end
 
     def to_s
