@@ -2,6 +2,7 @@
 require 'logger'
 require 'hashie'
 require 'net/https'
+require 'rest-client'
 require 'active_support/core_ext/module/attribute_accessors'
 require 'active_support/core_ext/hash/conversions'
 

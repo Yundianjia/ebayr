@@ -40,7 +40,6 @@ module Ebayr
           'X-EBAY-SOA-SECURITY-TOKEN' => self.auth_token,
           'X-EBAY-SOA-REQUEST-DATA-FORMAT' => 'XML',
           'X-EBAY-SOA-RESPONSE-DATA-FORMAT' => 'XML',
-          'X-EBAY-SOA-SERVICE-VERSION' => '1.0.0',
           'X-EBAY-SOA-SERVICE-NAME' => 'FileTransferService',
           'Content-Type' => 'text/xml'
       }

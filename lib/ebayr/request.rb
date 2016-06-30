@@ -70,7 +70,6 @@ module Ebayr #:nodoc:
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.read_timeout = @http_timeout
 
-
       # Output request XML if debug flag is set
       if debug == true
         puts "Request URL: #{@uri.to_s}"
@@ -81,11 +80,13 @@ module Ebayr #:nodoc:
 
       if @uri.port == 443
         http.use_ssl = true
+        http.ssl_timeout = @http_timeout
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
 
       post = Net::HTTP::Post.new(@uri.path, headers)
       post.body = body
+      post.content_type = 'text/xml'
 
       response = http.start { |http| http.request(post) }
 
