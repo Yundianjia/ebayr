@@ -70,10 +70,11 @@ module Ebayr #:nodoc:
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.read_timeout = @http_timeout
 
-      puts "Request URL: #{@uri.to_s}"
 
       # Output request XML if debug flag is set
       if debug == true
+        puts "Request URL: #{@uri.to_s}"
+        puts "Request Timeout: #{@http_timeout}"
         puts "Request headers: #{headers}"
         puts "Request body: #{body}"
       end

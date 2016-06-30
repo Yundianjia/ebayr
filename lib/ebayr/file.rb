@@ -17,7 +17,7 @@ module Ebayr
                              taskReferenceId: options[:task_reference_id]
                          })
 
-      self.new(:downloadFile, input: params, uri: uri).send
+      self.new(:downloadFile, input: params, uri: uri, http_timeout: 6000000).send
     end
 
     def self.upload(options = {})
