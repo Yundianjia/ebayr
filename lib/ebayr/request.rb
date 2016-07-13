@@ -72,10 +72,10 @@ module Ebayr #:nodoc:
 
       # Output request XML if debug flag is set
       if debug == true
-        puts "Request URL: #{@uri.to_s}"
-        puts "Request Timeout: #{@http_timeout}"
-        puts "Request headers: #{headers}"
-        puts "Request body: #{body}"
+        logger.info "Request URL: #{@uri.to_s}"
+        logger.info "Request Timeout: #{@http_timeout}"
+        logger.info "Request headers: #{headers}"
+        logger.info "Request body: #{body}"
       end
 
       if @uri.port == 443
@@ -91,11 +91,11 @@ module Ebayr #:nodoc:
       response = http.start { |http| http.request(post) }
 
       if debug == true
-        puts "Response: #{response}"
+        logger.info "Response: #{response}"
       end
 
       if response.is_a? Net::HTTPInternalServerError
-        puts "#{response.class.to_s}: #{response.message}"
+        logger.info "#{response.class.to_s}: #{response.message}"
         return Hashie::Mash.new({})
       end
 

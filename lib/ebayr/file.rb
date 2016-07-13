@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
+require 'rest-client'
+
 module Ebayr
   class File < Request
 
@@ -43,6 +45,22 @@ module Ebayr
           'X-EBAY-SOA-SERVICE-NAME' => 'FileTransferService',
           'Content-Type' => 'text/xml'
       }
+    end
+
+    def send
+      response = RestClient::Request.execute(:method => :post, :url => url, :payload => body, :headers => headers, :timeout => @http_timeout, :open_timeout => @http_timeout)
+
+      generate_file response, 'ebay_response.text'
+      generate_file response.body, 'ebay_content.text'
+    rescue => e
+
+    end
+
+    # 根据字符创生成文件
+    def generate_file(content = '', file = '')
+      File.open 'tmp/' + file, 'w+' do |f|
+        f.puts content
+      end
     end
   end
 end
