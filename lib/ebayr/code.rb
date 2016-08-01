@@ -102,6 +102,16 @@ module Ebayr #:nodoc:
     PART_DAMAGE = 7000
   end
 
+  module ListingStatusCodeType
+    Ended = 'Ended'.freeze
+
+    Active = 'Active'.freeze
+
+    Completed = 'Completed'.freeze
+
+    CoustomCode = 'CustomCode'.freeze
+  end
+
   # http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/types/SelectionModeCodeType.html
   module SelectionModeCodeType
     code_types = %w(Automatic CustomCode FreeText Manual Prefilled SelectionOnly)
