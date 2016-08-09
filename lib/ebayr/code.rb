@@ -120,4 +120,53 @@ module Ebayr #:nodoc:
       self.const_set item, item
     end
   end
+
+  module ListingTypeCodeType
+    Half = 'Half'.freeze
+
+    AdType = 'AdType'.freeze
+
+    Auction = 'Auction'.freeze
+
+    Chinese = 'Chinese'.freeze
+
+    Shopping = 'Shopping'.freeze
+
+    Unknown = 'Unknown'.freeze
+
+    CustomCode = 'CustomCode'.freeze
+
+    FixedPriceItem = 'FixedPriceItem'.freeze
+
+    LeadGeneration = 'LeadGeneration'.freeze
+
+    PersonalOffer = 'PersonalOffer'.freeze
+  end
+
+  # 订单状态
+  module OrderStatusCodeType
+    All = 'All'
+
+    Active = 'Active'
+
+    Inactive = 'Inactive'
+
+    InProcess = 'InProcess'
+
+    Invalid = 'Invalid'
+
+    Shipped = 'Shipped'
+
+    Cancelled = 'Cancelled'
+
+    Completed = 'Completed'
+
+    CustomCode = 'CustomCode'
+
+    Default = 'Default'
+
+    CancelPending = 'CancelPending'
+
+    Authenticated = 'Authenticated'
+  end
 end
