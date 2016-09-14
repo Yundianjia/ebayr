@@ -169,4 +169,18 @@ module Ebayr #:nodoc:
 
     Authenticated = 'Authenticated'
   end
+
+  module AckCodeType
+    Success = 'Success'.freeze
+
+    Warning = 'Warning'.freeze
+
+    Failure = 'Failure'.freeze
+
+    CustomCode = 'CustomCode'.freeze
+
+    PartialFailure = 'PartialFailure'.freeze
+
+    Accept = [Success, Warning]
+  end
 end
