@@ -14,12 +14,14 @@ module Ebayr
     end
 
     def self.download(options = {})
+      http_timeout = options[:http_timeout] || 6000000
+
       params = {}.merge!({
-                             fileReferenceId: options[:file_reference_id],
-                             taskReferenceId: options[:task_reference_id]
+                             fileReferenceId: options[:fileReferenceId],
+                             taskReferenceId: options[:taskReferenceId],
                          })
 
-      self.new(:downloadFile, input: params, uri: uri, http_timeout: 6000000).send
+      self.new(:downloadFile, input: params, uri: uri, http_timeout: http_timeout).send
     end
 
     def self.upload(options = {})
@@ -30,7 +32,7 @@ module Ebayr
       <<-XML
         <?xml version="1.0" encoding="utf-8"?>
         <#{@command}Request xmlns="http://www.ebay.com/marketplace/services">
-      #{input_xml}
+      #{self.input_xml}
         </#{@command}Request>
       XML
     end
@@ -48,12 +50,23 @@ module Ebayr
     end
 
     def send
-      response = RestClient::Request.execute(:method => :post, :url => url, :payload => body, :headers => headers, :timeout => @http_timeout, :open_timeout => @http_timeout)
+      if debug == true
+        logger.info "Request URL: #{@uri.to_s}"
+        logger.info "Request Timeout: #{@http_timeout}"
+        logger.info "Request headers: #{self.headers}"
+        logger.info "Request body: #{self.body}"
+      end
+
+      response = RestClient::Request.execute(method: :post, url: @uri.to_s, payload: self.body, headers: self.headers, timeout: @http_timeout, open_timeout: @http_timeout)
+
+      if debug == true
+        logger.info "Response: #{response}"
+      end
 
       generate_file response, 'ebay_response.text'
       generate_file response.body, 'ebay_content.text'
     rescue => e
-
+      logger.info "下载文件失败: #{e}"
     end
 
     # 根据字符创生成文件
